@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack && babel src --copy-files --out-dir distr",
     "test": "jest spec/api.spec.js --forceExit",
     "dev": "babel-node src/server.js",
     "start": "webpack -d eval-source-map && babel-node src/server.js",
