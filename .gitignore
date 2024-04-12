@@ -1,7 +1,7 @@
 # SSR
 public/app.js
 public/vendor.js
-
+distr/
 .env
 
 # Logs
