@@ -1,0 +1,11 @@
+ body {
+  background-image: url("/images/body2.png");
+  background-repeat: no-repeat;
+  background-size: cover; /* чтобы изображение занимало всю доступную область */
+  background-position: center; /* чтобы изображение было расположено по центру */
+}
+ .header-container {
+  display: flex;
+  justify-content: center;
+ }
+ 
