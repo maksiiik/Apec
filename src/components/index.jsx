@@ -1,15 +1,15 @@
 import React from 'react';
-import ReactDOMClient from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import App from './App';
 import components from './components';
 
 const Component = components[window.initState.componentName];
 
-ReactDOMClient.hydrateRoot(
-  document.getElementById('root'),
+ReactDOM.hydrate(
   <App {...window.initState}>
     <Component {...window.initState} />
   </App>,
+  document.getElementById('root')
 );
 
 delete window.initState;

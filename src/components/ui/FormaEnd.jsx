@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Paper, TextField, Button, Typography, Snackbar } from '@mui/material';
 import axios from 'axios';
-import MuiPhoneNumber from 'material-ui-phone-number';
 
 export default function FormaEnd() {
   const [formData, setFormData] = useState({
@@ -14,12 +13,15 @@ export default function FormaEnd() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // Проверяем, что введенный символ является цифрой
+    if (name === 'number' && isNaN(value)) {
+      return; // Прекращаем обработку, если введен символ, не являющийся цифрой
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
@@ -45,6 +47,7 @@ export default function FormaEnd() {
     }
   };
 
+
   return (
     <div
       style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}
@@ -66,18 +69,20 @@ export default function FormaEnd() {
         </Typography>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12}>
-          <MuiPhoneNumber
-                defaultCountry={'ru'}
+          <TextField
+                id="outlined-basic"
+                label="Телефон"
                 variant="outlined"
-                margin="normal"
-                required
                 fullWidth
-                id="username"
-                label="Номер телефона"
+                value={formData.number}
+                onChange={handleChange}
                 name="number"
-                autoComplete="username"
-                autoFocus
-                onChange={(phoneNumber) => setFormData({ ...formData, number: phoneNumber })}
+                inputProps={{
+                  type: 'tel',
+                  pattern: '[0-9]*',
+                  maxLength: "12",
+
+                }}
               />
           </Grid>
           <Grid item xs={12}>

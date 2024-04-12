@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Paper, TextField, Button, Typography, Grid, Snackbar } from '@mui/material';
 import axios from 'axios';
-import MuiPhoneNumber from 'material-ui-phone-number';
 
 export default function FormaZapolnenia() {
   const [formData, setFormData] = useState({
@@ -11,14 +10,18 @@ export default function FormaZapolnenia() {
   });
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // Проверяем, что введенный символ является цифрой
+    if (name === 'number' && isNaN(value)) {
+      return; // Прекращаем обработку, если введен символ, не являющийся цифрой
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -45,6 +48,8 @@ export default function FormaZapolnenia() {
     }
   };
 
+
+
   return (
     <div
       style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '20vh' }}
@@ -69,19 +74,17 @@ export default function FormaZapolnenia() {
               onSubmit={handleSubmit}
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
             >
-              <MuiPhoneNumber
-                defaultCountry={'ru'}
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="username"
-                label="Номер телефона"
-                name="number"
-                autoComplete="username"
-                autoFocus
-                onChange={(phoneNumber) => setFormData({ ...formData, number: phoneNumber })}
-              />
+                <TextField
+              id="number-field"
+              name="number"
+              label="Номер телефона"
+              variant="outlined"
+              style={{ marginBottom: '10px', width: '100%' }}
+              value={formData.number}
+              onChange={handleChange}
+              required
+              inputProps={{ maxLength: 12 }} // Limit input to 30 characters
+            />
               <TextField
                 name="email"
                 label="Почта"
