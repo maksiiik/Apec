@@ -117,7 +117,7 @@ export default function FormaEnd() {
         </Grid>
       </Paper>
       <Snackbar
-        open={snackbarOpen}
+        open={ snackbarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
         message={snackbarMessage}
