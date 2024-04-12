@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
-import MuiPhoneNumber from 'material-ui-phone-number';
 
 export default function ModalFor({ open, handleClose }) {
   const [formData, setFormData] = useState({
@@ -19,6 +18,10 @@ export default function ModalFor({ open, handleClose }) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    // Проверяем, что введенный символ является цифрой
+    if (name === 'number' && isNaN(value)) {
+      return; // Прекращаем обработку, если введен символ, не являющийся цифрой
+    }
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -84,29 +87,16 @@ export default function ModalFor({ open, handleClose }) {
         )}
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <MuiPhoneNumber
-              defaultCountry={'ru'}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Номер телефона"
-              name="number"
-              autoComplete="username"
-              autoFocus
-              onChange={(phoneNumber) => setFormData({ ...formData, number: phoneNumber })}
-            />
             <TextField
-              id="email-field"
-              name="email"
-              label="Почта"
+              id="number-field"
+              name="number"
+              label="Номер телефона"
               variant="outlined"
               style={{ marginBottom: '10px', width: '100%' }}
-              value={formData.email}
+              value={formData.number}
               onChange={handleChange}
               required
-              inputProps={{ maxLength: 30 }} // Limit input to 30 characters
+              inputProps={{ maxLength: 12 }} // Limit input to 30 characters
             />
             <TextField
               id="name-field"
@@ -115,6 +105,17 @@ export default function ModalFor({ open, handleClose }) {
               variant="outlined"
               style={{ marginBottom: '10px', width: '100%' }}
               value={formData.name}
+              onChange={handleChange}
+              required
+              inputProps={{ maxLength: 30 }} // Limit input to 30 characters
+            />
+            <TextField
+              id="email-field"
+              name="email"
+              label="Почта"
+              variant="outlined"
+              style={{ marginBottom: '10px', width: '100%' }}
+              value={formData.email}
               onChange={handleChange}
               required
               inputProps={{ maxLength: 30 }} // Limit input to 30 characters
